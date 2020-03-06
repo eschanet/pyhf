@@ -422,11 +422,11 @@ class Workspace(_ChannelSummaryMixin, dict):
 
     def _prune_and_rename(
         self,
-        prune_modifiers=[],
-        prune_modifier_types=[],
-        prune_samples=[],
-        prune_channels=[],
-        prune_measurements=[],
+        prune_modifiers=None,
+        prune_modifier_types=None,
+        prune_samples=None,
+        prune_channels=None,
+        prune_measurements=None,
         rename_modifiers={},
         rename_samples={},
         rename_channels={},
@@ -464,6 +464,17 @@ class Workspace(_ChannelSummaryMixin, dict):
             ~pyhf.workspace.Workspace: A new workspace object with the specified components removed or renamed
 
         """
+        if prune_modifiers is None:
+            prune_modifiers = []
+        if prune_modifier_types is None:
+            prune_modifier_types = []
+        if prune_samples is None:
+            prune_samples = []
+        if prune_channels is None:
+            prune_channels = []
+        if prune_measurements is None:
+            prune_measurements = []
+
         newspec = {
             'channels': [
                 {
@@ -528,7 +539,12 @@ class Workspace(_ChannelSummaryMixin, dict):
         return Workspace(newspec)
 
     def prune(
-        self, modifiers=[], modifier_types=[], samples=[], channels=[], measurements=[]
+        self,
+        modifiers=None,
+        modifier_types=None,
+        samples=None,
+        channels=None,
+        measurements=None,
     ):
         """
         Return a new, pruned workspace specification. This will not modify the original workspace.
@@ -546,6 +562,17 @@ class Workspace(_ChannelSummaryMixin, dict):
             ~pyhf.workspace.Workspace: A new workspace object with the specified components removed
 
         """
+        if modifiers is None:
+            modifiers = []
+        if modifier_types is None:
+            modifier_types = []
+        if samples is None:
+            samples = []
+        if channels is None:
+            channels = []
+        if measurements is None:
+            measurements = []
+
         return self._prune_and_rename(
             prune_modifiers=modifiers,
             prune_modifier_types=modifier_types,
